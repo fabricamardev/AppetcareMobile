@@ -1,0 +1,27 @@
+{
+    "locations": [
+ 
+        {
+            "id": 1,
+            "image": null,
+            "nome": "Petshop Recife é o bicho",
+            "email": "erickjeronimo@gmail.com",
+            "tipo": "Petshop",
+            "descricao": null,
+            "endereco": "Av. Gov. Magalhães Barata, 695 - Nazaré, Belém - PA, 66060-281, Brasil",
+            "latitude": -8.062806,
+            "longitude": -34.876914
+        },
+        {
+            "id": 4,
+            "image": null,
+            "nome": "Clínica Veterinária Marco Zero",
+            "email": "petshop@gmail.com",
+            "tipo": "Petshop",
+            "descricao": null,
+            "endereco": "Cais do Apolo, 212-218 - Recife, PE, Brasil",
+            "latitude": -8.063093,
+            "longitude": -34.871464
+        }
+    ]
+}

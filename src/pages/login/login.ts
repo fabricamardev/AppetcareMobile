@@ -7,6 +7,8 @@ import { User } from '../../providers/user';
 
 import { TranslateService } from '@ngx-translate/core';
 
+import { SignupPage } from '../signup/signup';
+
 
 @Component({
   selector: 'page-login',
@@ -17,8 +19,8 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
+    email: 'erickjeronimo@gmail.com',
+    password: '123456'
   };
 
   // Our translated text strings
@@ -29,10 +31,11 @@ export class LoginPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
+    this.translateService.get('Não foi possível entrar na sua conta. Verifique seus dados e tente novamente.').subscribe((value) => {
       this.loginErrorString = value;
     })
   }
+
 
   // Attempt to login in through our User service
   doLogin() {
@@ -41,12 +44,17 @@ export class LoginPage {
     }, (err) => {
       this.navCtrl.push(MainPage);
       // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      // let toast = this.toastCtrl.create({
+      //   message: this.loginErrorString,
+      //   duration: 3000,
+      //   position: 'top'
+      // });
+      // toast.present();
+      console.log("Erro " + err);
     });
+  }
+
+  signup() {
+    this.navCtrl.push(SignupPage);
   }
 }

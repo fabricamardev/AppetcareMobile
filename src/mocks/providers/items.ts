@@ -17,39 +17,60 @@ export class Items {
   constructor(public http: Http) {
     let items = [
       {
-        "name": "Burt Bear",
+        "nome": "Urso da Montanha",
         "profilePic": "assets/img/speakers/bear.jpg",
-        "about": "Burt is a Bear."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Charlie Cheetah",
+        "nome": "Charlie Cheetah",
         "profilePic": "assets/img/speakers/cheetah.jpg",
-        "about": "Charlie is a Cheetah."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Donald Duck",
+        "nome": "Donald Duck",
         "profilePic": "assets/img/speakers/duck.jpg",
-        "about": "Donald is a Duck."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Eva Eagle",
+        "nome": "Eva Eagle",
         "profilePic": "assets/img/speakers/eagle.jpg",
-        "about": "Eva is an Eagle."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Ellie Elephant",
+        "nome": "Ellie Elephant",
         "profilePic": "assets/img/speakers/elephant.jpg",
-        "about": "Ellie is an Elephant."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Molly Mouse",
+        "nome": "Molly Mouse",
         "profilePic": "assets/img/speakers/mouse.jpg",
-        "about": "Molly is a Mouse."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       },
       {
-        "name": "Paul Puppy",
+        "nome": "Paul Puppy",
         "profilePic": "assets/img/speakers/puppy.jpg",
-        "about": "Paul is a Puppy."
+        "dt_nascimento": "21/11/2010",
+        "sexo": "Macho",
+        "especie": "U. arctos",
+        "raca": "Urso Pardo"
       }
     ];
 
@@ -78,6 +99,12 @@ export class Items {
 
   add(item: Item) {
     this.items.push(item);
+  }
+
+  edit(item: Item) {
+    return this.items.filter((item) => {
+      return item;
+    });
   }
 
   delete(item: Item) {

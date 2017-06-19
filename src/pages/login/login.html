@@ -1,39 +1,34 @@
-<ion-header>
+<ion-content class="content" scroll="false">
+  <div class="splash-all">
+    <div class="splash-logo">
+      <img src="../assets/img/appetcare-logo.png" style="width: 100%"/>
+    </div>
+    <p style="font-size: 3em; margin-top: 0; margin-bottom:0.5em;">Appetcare</p>
+  
+    <form (submit)="doLogin()">
+      <ion-list>
 
-  <ion-navbar>
-    <ion-title>{{ 'LOGIN_TITLE' | translate }}</ion-title>
-  </ion-navbar>
+        <ion-item>
+          <ion-label fixed style="color:#f8d9a8">Email</ion-label>
+          <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        </ion-item>
 
-</ion-header>
+        <ion-item>
+          <ion-label fixed style="color:#f8d9a8">Senha</ion-label>
+          <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        </ion-item>
 
+        <div style="padding: 16px 16px 0;">
+          <button class="login" ion-button block>Entrar</button>
+          <button class="loginBtn loginBtn--facebook" ion-button block>Entrar com Facebook</button>
+          <button class="loginBtn loginBtn--google" ion-button block>Entrar com Google</button>
+        </div>
 
-<ion-content>
-  <form (submit)="doLogin()">
-    <ion-list>
-
-      <ion-item>
-        <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
-      </ion-item>
-
-      <!--
-      Want to use a Username instead of an Email? Here you go:
-
-      <ion-item>
-        <ion-label floating>{{ 'USERNAME' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username"></ion-input>
-      </ion-item>
-      -->
-
-      <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
-      </ion-item>
-
-      <div padding>
-        <button ion-button color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
-      </div>
-
-    </ion-list>
-  </form>
+      </ion-list>
+    </form>
+    <div class="botoes" style="padding: 0px 16px 0;">
+          <button ion-button block (click)="signup()" class="signup">Cadastrar</button>
+    </div>
+    
+  </div>
 </ion-content>

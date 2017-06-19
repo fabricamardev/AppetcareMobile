@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 
-import { ItemCreatePage } from '../item-create/item-create';
+import { PetCadastrarPage } from '../pet-cadastrar/pet-cadastrar';
 import { ItemDetailPage } from '../item-detail/item-detail';
 
 import { Items } from '../../providers/providers';
 
 import { Item } from '../../models/item';
+import { Network } from '@ionic-native/network';
 
 @Component({
-  selector: 'page-list-master',
-  templateUrl: 'list-master.html'
+  selector: 'page-pet-lista',
+  templateUrl: 'pet-lista.html'
 })
-export class ListMasterPage {
+export class PetListaPage {
   currentItems: Item[];
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, private network: Network) {
     this.currentItems = this.items.query();
   }
 
@@ -30,7 +31,7 @@ export class ListMasterPage {
    * modal and then adds the new item to our data source if the user created one.
    */
   addItem() {
-    let addModal = this.modalCtrl.create(ItemCreatePage);
+    let addModal = this.modalCtrl.create(PetCadastrarPage);
     addModal.onDidDismiss(item => {
       if (item) {
         this.items.add(item);
@@ -38,6 +39,7 @@ export class ListMasterPage {
     })
     addModal.present();
   }
+
 
   /**
    * Delete an item from the list of items.

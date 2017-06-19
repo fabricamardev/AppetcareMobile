@@ -15,9 +15,10 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { name: string, email: string, password: string } = {
+  account: { name: string, email: string, fone: string, password: string } = {
     name: 'Test Human',
     email: 'test@example.com',
+    fone: '+55(96)98117-8362',
     password: 'test'
   };
 
@@ -43,12 +44,13 @@ export class SignupPage {
       this.navCtrl.push(MainPage); // TODO: Remove this when you add your signup endpoint
 
       // Unable to sign up
-      let toast = this.toastCtrl.create({
-        message: this.signupErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      // let toast = this.toastCtrl.create({
+      //   message: this.signupErrorString,
+      //   duration: 3000,
+      //   position: 'top'
+      // });
+      // toast.present();
+      console.log("Erro " + err);
     });
   }
 }

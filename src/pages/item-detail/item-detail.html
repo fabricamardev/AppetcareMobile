@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ item.name }}</ion-title>
+    <ion-title>{{ item.nome }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -11,8 +11,15 @@
   <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
   </div>
 
+  <!--<p><button ion-item (click)="editItem(item)">Editar</button></p>-->
+
+
+
   <div class="item-detail" padding>
-    <h2>{{item.name}}</h2>
-    <p>{{item.about}}</p>
+    <h2>{{item.nome}}</h2>
+    <p>{{item.dt_nascimento}}</p>
+    <p>{{item.sexo}}</p>
+    <p>{{item.especie}}</p>
+    <p>{{item.raca}}</p>
   </div>
 </ion-content>

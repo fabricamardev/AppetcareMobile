@@ -6,10 +6,10 @@ import { Camera } from '@ionic-native/camera';
 
 
 @Component({
-  selector: 'page-item-create',
-  templateUrl: 'item-create.html'
+  selector: 'page-pet-cadastrar',
+  templateUrl: 'pet-cadastrar.html'
 })
-export class ItemCreatePage {
+export class PetCadastrarPage {
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
@@ -21,8 +21,11 @@ export class ItemCreatePage {
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
     this.form = formBuilder.group({
       profilePic: [''],
-      name: ['', Validators.required],
-      about: ['']
+      nome: ['', Validators.required],
+      dt_nascimento: [''], 
+      sexo: [''],
+      especie: [''],
+      raca: ['']
     });
 
     // Watch the form for changes, and
@@ -44,7 +47,8 @@ export class ItemCreatePage {
       }).then((data) => {
         this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
       }, (err) => {
-        alert('Unable to take photo');
+        // alert('Unable to take photo');
+        console.log('Unable to take photo' + err);
       })
     } else {
       this.fileInput.nativeElement.click();

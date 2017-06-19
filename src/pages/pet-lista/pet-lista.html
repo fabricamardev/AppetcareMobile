@@ -1,13 +1,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lista de Pet's</ion-title>
 
-    <ion-buttons end>
+    <!--<ion-buttons end>
       <button ion-button icon-only (click)="addItem()">
         <ion-icon name="add"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>-->
   </ion-navbar>
 
 </ion-header>
@@ -20,16 +23,23 @@
         <ion-avatar item-start>
           <img [src]="item.profilePic" />
         </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
+        <h2>{{item.nome}}</h2>
+        <p>{{item.dt_nascimento}}</p>
+        <!--<p>{{item.sexo}}</p>
+        <p>{{item.especie}}</p>
+        <p>{{item.raca}}</p>-->
         <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
       </button>
 
       <ion-item-options>
         <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
+          Apagar
         </button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab class="addpet" (click)="addItem()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>

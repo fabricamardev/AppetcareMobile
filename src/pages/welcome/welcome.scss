@@ -1,17 +1,14 @@
 page-welcome {
-  .splash-bg {
-    position: relative;
-    background: url('../assets/img/splashbg.png') no-repeat transparent;
-    background-size: cover;
-    height: 45%;
-    z-index: 1;
-    background-repeat: repeat-x;
-    animation: animatedBackground 40s linear infinite;
+  
+  .content{
+    background-color: #353559;
+    color: #F8D9A8;
   }
 
-  @keyframes animatedBackground {
-    from { background-position: 0 0; }
-    to { background-position: 100% 0; }
+  .splash-all{
+    margin: 15px;
+    padding-top: 80px;
+    text-align: center;
   }
 
   .splash-info {
@@ -22,10 +19,10 @@ page-welcome {
   }
   .splash-logo {
     margin: auto;
-    background: url('../assets/img/appicon.png') repeat transparent;
+    background: url('../assets/img/appetcare-logo.png') no-repeat transparent;
     background-size: 100%;
-    width: 128px;
-    height: 128px;
+    width: 228px;
+    height: 228px;
   }
   .splash-intro {
     font-size: 18px;
@@ -33,14 +30,23 @@ page-welcome {
     max-width: 80%;
     margin: auto;
   }
+
+  .botoes {
+    margin-top: 80px;
+  }
+
   button.login {
     margin-top: 25px;
-    background-color: white;
+    background-color: #F8D9A8;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-    color: #333;
+    color: #353559;
 
     &.activated {
       background-color: rgb(220, 220, 220);
     }
+  }
+
+  button.signup {
+    margin-top: 30px;
   }
 }

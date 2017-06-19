@@ -1,0 +1,28 @@
+<ion-header>
+
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Perfil</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
+  </div>
+
+  <p><button ion-item (click)="editItem(item)">Editar</button></p>
+
+
+
+  <div class="item-detail" padding>
+    <h2>{{item.nome}}</h2>
+    <p>{{item.dt_nascimento}}</p>
+    <p>{{item.sexo}}</p>
+    <p>{{item.especie}}</p>
+    <p>{{item.raca}}</p>
+  </div>
+</ion-content>

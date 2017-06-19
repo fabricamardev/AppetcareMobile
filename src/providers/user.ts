@@ -35,16 +35,28 @@ export class User {
    * the user entered on the form.
    */
   login(accountInfo: any) {
-    let seq = this.api.post('login', accountInfo).share();
 
+    accountInfo =  {
+           "grant_type": "password",
+           "client_id": "1",
+           "client_secret": "GvZBT2iqMMC3e54VnzM5b6136pU6TK4gGFJVHqZl",
+           "username": accountInfo.email,
+           "password": accountInfo.password,
+           "scope": ""
+    };
+
+
+    let seq = this.api.post('oauth/token', accountInfo).share();
     seq
       .map(res => res.json())
       .subscribe(res => {
+        console.log("passou aqui");
+        console.log(res);
         // If the API returned a successful response, mark the user as logged in
-        if (res.status == 'success') {
+        //if (res.status == 'success') {
           this._loggedIn(res);
-        } else {
-        }
+        //} else {
+        //}
       }, err => {
         console.error('ERROR', err);
       });

@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CardsPage } from '../pages/cards/cards';
 import { ContentPage } from '../pages/content/content';
 import { FirstRunPage } from '../pages/pages';
-import { ListMasterPage } from '../pages/list-master/list-master';
+import { PetListaPage } from '../pages/pet-lista/pet-lista';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { MenuPage } from '../pages/menu/menu';
@@ -17,52 +17,51 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { PerfilPage } from '../pages/perfil/perfil';
+import { TestePage } from '../pages/teste/teste';
+import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
+import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
 
 import { Settings } from '../providers/providers';
 
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
-  template: `<ion-menu [content]="content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Pages</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-
-  </ion-menu>
-  <ion-nav #content [root]="rootPage"></ion-nav>`
+  templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
   rootPage = FirstRunPage;
 
-  @ViewChild(Nav) nav: Nav;
-
   pages: any[] = [
-    { title: 'Tutorial', component: TutorialPage },
-    { title: 'Welcome', component: WelcomePage },
-    { title: 'Tabs', component: TabsPage },
-    { title: 'Cards', component: CardsPage },
-    { title: 'Content', component: ContentPage },
-    { title: 'Login', component: LoginPage },
-    { title: 'Signup', component: SignupPage },
-    { title: 'Map', component: MapPage },
-    { title: 'Master Detail', component: ListMasterPage },
-    { title: 'Menu', component: MenuPage },
-    { title: 'Settings', component: SettingsPage },
-    { title: 'Search', component: SearchPage }
+        { title: 'Appetcare', component: PetListaPage, icon: 'home'},
+        { title: 'Perfil', component: TestePage, icon: 'person'},
+        { title: 'Serviços', component: TestePage, icon: 'ionic'},
+        { title: "Pet's", component: PetListaPage, icon: 'paw'},
+        { title: 'Consultas', component: TestePage, icon: 'medical'},
+        { title: 'Localizar Petshop', component: LocalizarClinicaPage, icon: 'pin'},
+        { title: 'Sobre', component: TestePage, icon: 'information-circle'},
+        { title: 'Localizar ONGs', component: TestePage, icon: 'locate'},
+        { title: 'Vacinas', component: TestePage, icon: 'thermometer'},
+        { title: 'Vermifugo', component: TestePage, icon: 'flask'},
+        { title: 'Medicamentos', component: TestePage, icon: 'medkit'},
+        { title: 'Sair', component: LoginPage, icon: 'exit'},
+        // { title: 'Tutorial', component: TutorialPage },
+        // { title: 'Welcome', component: WelcomePage },
+        // { title: 'Tabs', component: TabsPage },
+        // { title: 'Cards', component: CardsPage },
+        // { title: 'Content', component: ContentPage },
+        // { title: 'Login', component: LoginPage },
+        // { title: 'Signup', component: SignupPage },
+        // { title: 'Map', component: MapPage },
+        // { title: 'Menu', component: MenuPage },
+        // { title: 'Settings', component: SettingsPage },
+        // { title: 'Search', component: SearchPage }
   ]
 
-  constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
-    this.initTranslate();
+  constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config
+  , private statusBar: StatusBar, private splashScreen: SplashScreen) {
+    
   }
 
   ionViewDidLoad() {
@@ -74,20 +73,7 @@ export class MyApp {
     });
   }
 
-  initTranslate() {
-    // Set the default language for translation strings, and the current language.
-    this.translate.setDefaultLang('en');
 
-    if (this.translate.getBrowserLang() !== undefined) {
-      this.translate.use(this.translate.getBrowserLang());
-    } else {
-      this.translate.use('en'); // Set your language here
-    }
-
-    this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
-      this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
-    });
-  }
 
   openPage(page) {
     // Reset the content nav to have just this page

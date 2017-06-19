@@ -7,7 +7,8 @@ import 'rxjs/add/operator/map';
  */
 @Injectable()
 export class Api {
-  url: string = 'https://example.com/api/v1';
+  //url: string = 'http://mardev.dyndns.tv:8080/appetcare/api';
+  url: string = 'http://192.168.43.127:8000';
 
   constructor(public http: Http) {
   }

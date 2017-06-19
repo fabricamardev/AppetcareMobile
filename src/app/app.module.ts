@@ -8,9 +8,9 @@ import { MyApp } from './app.component';
 
 import { CardsPage } from '../pages/cards/cards';
 import { ContentPage } from '../pages/content/content';
-import { ItemCreatePage } from '../pages/item-create/item-create';
+import { PetCadastrarPage } from '../pages/pet-cadastrar/pet-cadastrar';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
-import { ListMasterPage } from '../pages/list-master/list-master';
+import { PetListaPage } from '../pages/pet-lista/pet-lista';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
 import { MenuPage } from '../pages/menu/menu';
@@ -20,16 +20,24 @@ import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { PerfilPage } from '../pages/perfil/perfil';
+import { TestePage } from '../pages/teste/teste';
+import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
+import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
+
 
 import { Api } from '../providers/api';
 import { Items } from '../mocks/providers/items';
 import { Settings } from '../providers/settings';
 import { User } from '../providers/user';
+import { Server } from './../providers/server';
 
 import { Camera } from '@ionic-native/camera';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -65,9 +73,9 @@ let pages = [
   MyApp,
   CardsPage,
   ContentPage,
-  ItemCreatePage,
+  PetCadastrarPage,
   ItemDetailPage,
-  ListMasterPage,
+  PetListaPage,
   LoginPage,
   MapPage,
   MenuPage,
@@ -76,7 +84,11 @@ let pages = [
   SignupPage,
   TabsPage,
   TutorialPage,
-  WelcomePage
+  WelcomePage,
+  PerfilPage,
+  TestePage,
+  LocalizarClinicaPage, 
+  ListaClinicasPage
 ];
 
 export function declarations() {
@@ -96,6 +108,9 @@ export function providers() {
     GoogleMaps,
     SplashScreen,
     StatusBar,
+    Network,
+    Geolocation,
+    Server,
 
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development

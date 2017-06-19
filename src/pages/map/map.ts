@@ -1,7 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { TestePage } from './../teste/teste';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, Platform, ModalController } from 'ionic-angular';
+import { Server } from './../../providers/server';
+import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, LatLng, CameraPosition } from '@ionic-native/google-maps';
+
+
 
 declare var google: any;
 
@@ -11,42 +16,123 @@ declare var google: any;
 })
 export class MapPage {
   
-  @ViewChild('map') map;
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  // @ViewChild('map') map;
 
-  constructor(private googleMaps: GoogleMaps, public navCtrl: NavController, public platform: Platform) { }
+  constructor(private googleMaps: GoogleMaps, public navCtrl: NavController
+  , public platform: Platform, private geolocation: Geolocation, public server: Server
+  ,public modalCtrl: ModalController) { }
 
 
   ngAfterViewInit() {
     this.loadMap();
   }
-  loadMap() {
-    // make sure to create following structure in your view.html file
-    // and add a height (for example 100%) to it, else the map won't be visible
-    // <ion-content>
-    //  <div #map id="map" style="height:100%;"></div>
-    // </ion-content>
+  
 
-    // create a new map by passing HTMLElement
-    let element: HTMLElement = document.getElementById('map');
+  loadMap(){  
+    let petsLocations = [];
 
-    let map: GoogleMap = this.googleMaps.create(element);
+    this.server.buscarClinicas()
+    .then((lista) => {
+      petsLocations = lista;
+      console.log(petsLocations);
+      return this.geolocation.getCurrentPosition()
+    })
+    .then((position) => {
 
-    // listen to MAP_READY event
-    // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    map.one(GoogleMapsEvent.MAP_READY).then(() => console.log('Map is ready!'));
+      console.log('ONDE EU ESTOU ', position);
 
-    // create LatLng object
-    let ionic: LatLng = new LatLng(43.0741904, -89.3809802);
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  
+      let mapOptions = {
+        center: latLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+  
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    // create CameraPosition
-    let position: CameraPosition = {
-      target: ionic,
-      zoom: 18,
-      tilt: 30
-    };
+      // adiciona as marcas no map
+      let marker = new google.maps.Marker({
+        position: latLng,
+        title: 'Minha Localização',
+        map: this.map
+      });
+
+      marker.addListener('click', function() {
+        console.log(marker);
+        alert('uruuuu clicou em ' + marker.nome);
+      });
+
+      // for petsLocations cria uma macacao no map
+      for(let location of petsLocations){
+
+        let posicao = {
+          lat:  location.latitude,
+          lng:  location.longitude
+        }; 
+        console.log(posicao);
+
+        let infowindow = new google.maps.InfoWindow({
+          content: location.nome,
+          maxWidth: 200
+        });
+
+        let image = '../assets/img/iconpet.png';
+        //adiciona as marcas no map
+        let marca = new google.maps.Marker({
+          position: posicao,
+          title: location.nome,
+          map: this.map,
+          icon: image
+        });
+        
+        marca.addListener('click', function() {
+          console.log(marca);
+          infowindow.open(this.map, marca);
+          // let addModal = this.modalCtrl.create(TestePage);
+          // addModal.onDidDismiss(item => {
+          //   if (item) {
+          //     this.items.add(item);
+          //   }
+          // })
+          // addModal.present();
+        });
+
+      }
+
+    }, (erro)=> {console.log(erro)});
+  };
+
+  // loadMap() {
+  //   // make sure to create following structure in your view.html file
+  //   // and add a height (for example 100%) to it, else the map won't be visible
+  //   // <ion-content>
+  //   //  <div #map id="map" style="height:100%;"></div>
+  //   // </ion-content>
+
+  //   // create a new map by passing HTMLElement
+  //   let element: HTMLElement = document.getElementById('map');
+
+  //   let map: GoogleMap = this.googleMaps.create(element);
+
+  //   // listen to MAP_READY event
+  //   // You must wait for this event to fire before adding something to the map or modifying it in anyway
+  //   map.one(GoogleMapsEvent.MAP_READY).then(() => console.log('Map is ready!'));
+
+  //   // create LatLng object
+  //   let ionic: LatLng = new LatLng(43.0741904, -89.3809802);
+
+  //   // create CameraPosition
+  //   let position: CameraPosition = {
+  //     target: ionic,
+  //     zoom: 18,
+  //     tilt: 30
+  //   };
 
     // move the map's camera to position
-    map.moveCamera(position);
+    // map.moveCamera(position);
 
     // create new marker
     //  let markerOptions: MarkerOptions = {
@@ -95,5 +181,5 @@ export class MapPage {
     //   }
     // }
 
-  }
+  // }
 }
