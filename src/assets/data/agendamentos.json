@@ -1,0 +1,21 @@
+{
+    "agendamentos": [
+ 
+        {
+            "id": 1,
+            "estabeleciemento": "Petshop da Tia Maria",
+            "servico": "Banho e tosa",
+            "atendente": "Zezinho",
+            "horario": "08:00 - 09:00",
+            "pet": "Chico"
+        },
+        {
+            "id": 2,
+            "estabeleciemento": "Clínica veterinária Mundo do Animal",
+            "servico": "Consulta",
+            "atendente": "Dr. Joãozinho",
+            "horario": "10:00 - 11:00",
+            "pet": "Xurupita"
+        }
+    ]
+}

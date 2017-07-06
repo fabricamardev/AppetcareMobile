@@ -15,11 +15,12 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { name: string, email: string, fone: string, password: string } = {
-    name: 'Test Human',
-    email: 'test@example.com',
-    fone: '+55(96)98117-8362',
-    password: 'test'
+  account: { name: string, email: string, fone: string, cpf: string, password: string } = {
+    name: undefined,
+    email: undefined,
+    fone: undefined,
+    cpf: undefined,
+    password: undefined
   };
 
   // Our translated text strings
@@ -37,19 +38,18 @@ export class SignupPage {
 
   doSignup() {
     // Attempt to login in through our User service
-    this.user.signup(this.account).subscribe((resp) => {
+    this.user.signup(this.account)
+    .then((resp) => {
       this.navCtrl.push(MainPage);
-    }, (err) => {
-
-      this.navCtrl.push(MainPage); // TODO: Remove this when you add your signup endpoint
-
+    })
+    .catch ((err) => {
       // Unable to sign up
-      // let toast = this.toastCtrl.create({
-      //   message: this.signupErrorString,
-      //   duration: 3000,
-      //   position: 'top'
-      // });
-      // toast.present();
+      let toast = this.toastCtrl.create({
+         message: this.signupErrorString,
+         duration: 3000,
+         position: 'top'
+      });
+      toast.present();
       console.log("Erro " + err);
     });
   }

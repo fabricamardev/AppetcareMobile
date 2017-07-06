@@ -1,5 +1,5 @@
 # AppetcareMobile
-<img src="./../assets/img/appetcare-logo.png" width="400" />
+<img src="../assets/img/appetcare-logo.png" width="400" />
 
 Aplicativo mobile do Appetcare
 

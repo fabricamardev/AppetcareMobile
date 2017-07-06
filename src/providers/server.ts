@@ -32,4 +32,24 @@ export class Server {
  
   }
 
+
+  buscarAgendamentos(){
+ 
+        if(this.data){
+            return Promise.resolve(this.data);
+        }
+ 
+        return new Promise(resolve => {
+ 
+            this.http.get('assets/data/agendamentos.json').map(res => res.json()).subscribe(data => {
+ 
+                this.data = data.locations
+                resolve(this.data);
+ 
+            });
+ 
+        });
+ 
+  }
+
 }

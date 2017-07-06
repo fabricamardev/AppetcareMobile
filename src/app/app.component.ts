@@ -20,7 +20,9 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { TestePage } from '../pages/teste/teste';
 import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
-import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
+// import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
+import { AgendamentoServicoListaPage } from './../pages/agendamento-servico-lista/agendamento-servico-lista';
+
 
 import { Settings } from '../providers/providers';
 
@@ -31,12 +33,13 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage = FirstRunPage;
+  loggedin = (window.localStorage.getItem('token') ? true : false);
+  rootPage = (window.localStorage.getItem('token') ? PetListaPage : LoginPage);
 
   pages: any[] = [
         { title: 'Appetcare', component: PetListaPage, icon: 'home'},
         { title: 'Perfil', component: TestePage, icon: 'person'},
-        { title: 'Serviços', component: TestePage, icon: 'ionic'},
+        { title: 'Agendamentos de serviços', component: AgendamentoServicoListaPage, icon: 'calendar'},
         { title: "Pet's", component: PetListaPage, icon: 'paw'},
         { title: 'Consultas', component: TestePage, icon: 'medical'},
         { title: 'Localizar Petshop', component: LocalizarClinicaPage, icon: 'pin'},

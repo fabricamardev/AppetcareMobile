@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Serviços agendados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of currentItems">
+      <button ion-item (click)="openItem(item)">
+        <ion-avatar item-start>
+          <img [src]="item.profilePic" />
+        </ion-avatar>
+        <h2>{{item.nome}}</h2>
+        <p>{{item.dt_nascimento}}</p>
+        <!--<p>{{item.sexo}}</p>
+        <p>{{item.especie}}</p>
+        <p>{{item.raca}}</p>-->
+        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
+      </button>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteItem(item)">
+          Apagar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab class="addpet" (click)="addItem()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
+

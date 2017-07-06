@@ -24,6 +24,7 @@ import { PerfilPage } from '../pages/perfil/perfil';
 import { TestePage } from '../pages/teste/teste';
 import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
 import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
+import { AgendamentoServicoListaPage } from './../pages/agendamento-servico-lista/agendamento-servico-lista';
 
 
 import { Api } from '../providers/api';
@@ -88,7 +89,8 @@ let pages = [
   PerfilPage,
   TestePage,
   LocalizarClinicaPage, 
-  ListaClinicasPage
+  ListaClinicasPage,
+  AgendamentoServicoListaPage
 ];
 
 export function declarations() {

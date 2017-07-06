@@ -39,29 +39,19 @@ export class User {
     accountInfo =  {
            "grant_type": "password",
            "client_id": "1",
-           "client_secret": "GvZBT2iqMMC3e54VnzM5b6136pU6TK4gGFJVHqZl",
+           "client_secret": "jYpTMjx5MMumELR0M9BaKbEvGz4ir8AvqD2jsE7x",
            "username": accountInfo.email,
            "password": accountInfo.password,
            "scope": ""
     };
 
 
-    let seq = this.api.post('oauth/token', accountInfo).share();
-    seq
-      .map(res => res.json())
-      .subscribe(res => {
+    return this.api.post('oauth/token', accountInfo)
+    .then((res: any) => {
         console.log("passou aqui");
         console.log(res);
-        // If the API returned a successful response, mark the user as logged in
-        //if (res.status == 'success') {
-          this._loggedIn(res);
-        //} else {
-        //}
-      }, err => {
-        console.error('ERROR', err);
+        this._loggedIn(res.access_token);
       });
-
-    return seq;
   }
 
   /**
@@ -69,33 +59,40 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
 
-    seq
-      .map(res => res.json())
-      .subscribe(res => {
-        // If the API returned a successful response, mark the user as logged in
-        if (res.status == 'success') {
-          this._loggedIn(res);
-        }
-      }, err => {
-        console.error('ERROR', err);
+    let senha = accountInfo.password;
+    delete accountInfo.password;
+
+    return this.api.post('api/tutores', accountInfo)
+      .then((res: any) => {
+          let dados: any = {};
+          console.log(res);
+          dados.name = res.nome;
+          dados.email = res.email;
+          dados.tutor_id = res.id
+          dados.password = senha;
+          return dados;
+      })
+      .then(dados => {
+        return this.api.post('api/users', dados);
+      })
+      .then((user: any ) => {
+        return this.login({email: user.email, password: senha});
       });
-
-    return seq;
   }
+
 
   /**
    * Log the user out, which forgets the session
    */
   logout() {
-    this._user = null;
+    window.localStorage.removeItem('token');
   }
 
   /**
    * Process a login/signup response to store user data
    */
-  _loggedIn(resp) {
-    this._user = resp.user;
+  _loggedIn(token) {
+    window.localStorage.setItem('token', token);
   }
 }

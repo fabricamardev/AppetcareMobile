@@ -54,16 +54,16 @@ export class MapPage {
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
       // adiciona as marcas no map
-      let marker = new google.maps.Marker({
+      // let marker = 
+      new google.maps.Marker({
         position: latLng,
         title: 'Minha Localização',
         map: this.map
       });
 
-      marker.addListener('click', function() {
-        console.log(marker);
-        alert('uruuuu clicou em ' + marker.nome);
-      });
+      // marker.addListener('click', function() {
+      //   console.log(marker);
+      // });
 
       // for petsLocations cria uma macacao no map
       for(let location of petsLocations){
@@ -74,8 +74,29 @@ export class MapPage {
         }; 
         console.log(posicao);
 
+        let contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+            'sandstone rock formation in the southern part of the '+
+            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+            'south west of the nearest large town, Alice Springs; 450&#160;km '+
+            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+            'Aboriginal people of the area. It has many springs, waterholes, '+
+            'rock caves and ancient paintings. Uluru is listed as a World '+
+            'Heritage Site.</p>'+
+            '<p>Attribution: Uluru, <button ion-item (click)="openItem(item)">'+
+            'Saiba mais<button> '+
+            '(last visited June 22, 2009).</p>'+
+            '</div>'+
+            '</div>';
+
         let infowindow = new google.maps.InfoWindow({
-          content: location.nome,
+          content: contentString,
           maxWidth: 200
         });
 
@@ -91,19 +112,22 @@ export class MapPage {
         marca.addListener('click', function() {
           console.log(marca);
           infowindow.open(this.map, marca);
-          // let addModal = this.modalCtrl.create(TestePage);
-          // addModal.onDidDismiss(item => {
-          //   if (item) {
-          //     this.items.add(item);
-          //   }
-          // })
-          // addModal.present();
         });
 
       }
 
     }, (erro)=> {console.log(erro)});
-  };
+  }
+
+
+  /**
+   * Navegar para detalhes do estabelecimento
+   */
+  openItem(item) {
+    this.navCtrl.push(TestePage, {
+      item: item
+    });
+  }
 
   // loadMap() {
   //   // make sure to create following structure in your view.html file

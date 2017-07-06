@@ -1,12 +1,13 @@
 <ion-content padding>
   <ion-list>
-        <ion-item *ngFor="let location of petsLocations">
-          
-          <ion-icon item-left name="pin"></ion-icon>
-          
-          <h2>{{location.nome}}</h2>
-          <p>{{location.tipo}}</p>
-          <p>{{location.endereco}}</p>
+        <ion-item *ngFor="let agendamento of agendamentos">
+          <button ion-item (click)="openItem(agendamento)">
+            <ion-icon item-left name="pin"></ion-icon>
+            
+            <h2>{{agendamento.pet}}</h2>
+            <p>{{agendamento.estabelecimento}}</p>
+            <p>{{agendamento.servico}} - {{agendamento.horario}}</p>
+          </button>
         </ion-item>
   </ion-list>
 </ion-content>

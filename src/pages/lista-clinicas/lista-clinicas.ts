@@ -1,3 +1,4 @@
+import { TestePage } from './../teste/teste';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Server } from './../../providers/server';
@@ -20,11 +21,21 @@ export class ListaClinicasPage {
   }
 
   buscarClinicas(){  
-    this.server.buscarClinicas()
+    this.server.buscarAgendamentos()
     .then((lista) => {
       this.petsLocations = lista;
       console.log(this.petsLocations);
       return this.petsLocations
+    });
+  }
+
+
+  /**
+   * Navegar para detalhes do estabelecimento
+   */
+  openItem(item) {
+    this.navCtrl.push(TestePage, {
+      item: item
     });
   }
 
