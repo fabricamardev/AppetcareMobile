@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Server } from './../../providers/server';
 
-/**
- * Generated class for the AgendamentoServicoNovoPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-agendamento-servico-novo',
@@ -14,11 +10,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AgendamentoServicoNovoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  listaEstabelecimentos: any = [];
+  estabelecimentoId;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public server: Server) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AgendamentoServicoNovoPage');
+  ngAfterViewInit() {
+    console.log('Iniciando Agendamento de Serviços');
+    this.buscarClinica();
   }
+
+  buscarClinica(){
+    this.server.buscarClinicas()
+    .then((lista) => {
+      this.listaEstabelecimentos = lista;
+      console.log(this.listaEstabelecimentos);
+    });
+
+ }
+
 
 }

@@ -1,3 +1,4 @@
+
 import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, Config } from 'ionic-angular';
 
@@ -22,6 +23,7 @@ import { TestePage } from '../pages/teste/teste';
 import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
 // import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
 import { AgendamentoServicoListaPage } from './../pages/agendamento-servico-lista/agendamento-servico-lista';
+import { LogoutPage } from '../pages/logout/logout';
 
 
 import { Settings } from '../providers/providers';
@@ -38,7 +40,7 @@ export class MyApp {
 
   pages: any[] = [
         { title: 'Appetcare', component: PetListaPage, icon: 'home'},
-        { title: 'Perfil', component: TestePage, icon: 'person'},
+        { title: 'Perfil', component: PerfilPage, icon: 'person'},
         { title: 'Agendamentos de serviços', component: AgendamentoServicoListaPage, icon: 'calendar'},
         { title: "Pet's", component: PetListaPage, icon: 'paw'},
         { title: 'Consultas', component: TestePage, icon: 'medical'},
@@ -48,7 +50,7 @@ export class MyApp {
         { title: 'Vacinas', component: TestePage, icon: 'thermometer'},
         { title: 'Vermifugo', component: TestePage, icon: 'flask'},
         { title: 'Medicamentos', component: TestePage, icon: 'medkit'},
-        { title: 'Sair', component: LoginPage, icon: 'exit'},
+        { title: 'Sair', component: LogoutPage, icon: 'exit'},
         // { title: 'Tutorial', component: TutorialPage },
         // { title: 'Welcome', component: WelcomePage },
         // { title: 'Tabs', component: TabsPage },

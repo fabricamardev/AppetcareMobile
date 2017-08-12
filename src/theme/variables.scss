@@ -30,8 +30,10 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  bege:       #f8d9a8,
-  roxo:       #353559
+  roxo:  (
+    base:#353559,
+    contrast:#f8d9a8
+  ),
 );
 
 

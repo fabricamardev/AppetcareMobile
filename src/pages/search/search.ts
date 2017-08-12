@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { ItemDetailPage } from '../item-detail/item-detail';
+import { PetDetailPage } from '../pet-detail/pet-detail';
 
 import { Item } from '../../models/item';
 
@@ -36,7 +36,7 @@ export class SearchPage {
    * Navigate to the detail page for this item.
    */
   openItem(item: Item) {
-    this.navCtrl.push(ItemDetailPage, {
+    this.navCtrl.push(PetDetailPage, {
       item: item
     });
   }

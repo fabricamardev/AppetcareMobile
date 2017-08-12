@@ -1,10 +1,11 @@
+
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 
 import { PetCadastrarPage } from '../pet-cadastrar/pet-cadastrar';
-import { ItemDetailPage } from '../item-detail/item-detail';
+import { PetDetailPage } from '../pet-detail/pet-detail';
 
-import { Items } from '../../providers/providers';
+import { Server } from '../../providers/server';
 
 import { Item } from '../../models/item';
 import { Network } from '@ionic-native/network';
@@ -14,17 +15,41 @@ import { Network } from '@ionic-native/network';
   templateUrl: 'pet-lista.html'
 })
 export class PetListaPage {
-  currentItems: Item[];
+  pets: any = [];
+  pet: {
+    'nome' : undefined,
+    'dt_nascimento' : undefined,
+    'sexo' : undefined,
+    'especie' : undefined,
+    'raca' : undefined 
+  };
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController, private network: Network) {
-    this.currentItems = this.items.query();
+  constructor(
+    public navCtrl: NavController, 
+    public server: Server, 
+    public modalCtrl: ModalController, 
+    private network: Network) {
+
   }
 
   /**
    * The view loaded, let's query our items for the list
    */
   ionViewDidLoad() {
+
   }
+
+  buscarPets() {
+    this.server.buscarPets()
+    .then((lista) => {
+      this.pets = lista;
+      console.log(this.pets);
+    })
+    .catch((erro : any) => {
+      console.error(erro);
+    })
+  }
+
 
   /**
    * Prompt the user to add a new item. This shows our ItemCreatePage in a
@@ -32,9 +57,9 @@ export class PetListaPage {
    */
   addItem() {
     let addModal = this.modalCtrl.create(PetCadastrarPage);
-    addModal.onDidDismiss(item => {
-      if (item) {
-        this.items.add(item);
+    addModal.onDidDismiss(pet => {
+      if (pet) {
+        this.pets.add(pet);
       }
     })
     addModal.present();
@@ -44,16 +69,16 @@ export class PetListaPage {
   /**
    * Delete an item from the list of items.
    */
-  deleteItem(item) {
-    this.items.delete(item);
+  deleteItem(pet) {
+    this.pets.delete(pet);
   }
 
   /**
    * Navigate to the detail page for this item.
    */
-  openItem(item: Item) {
-    this.navCtrl.push(ItemDetailPage, {
-      item: item
+  openPet(pet) {
+    this.navCtrl.push(PetDetailPage, {
+      pet: pet
     });
   }
 }

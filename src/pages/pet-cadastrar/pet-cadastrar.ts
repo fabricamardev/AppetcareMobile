@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, ViewController } from 'ionic-angular';
 
 import { Camera } from '@ionic-native/camera';
+import { Server } from '../../providers/server';
 
 
 @Component({
@@ -14,29 +15,64 @@ export class PetCadastrarPage {
 
   isReadyToSave: boolean;
 
-  item: any;
+  especies: any = [];
+  racas: any = [];
+
+  especieId: any;
 
   form: FormGroup;
 
-  constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera) {
-    this.form = formBuilder.group({
-      profilePic: [''],
-      nome: ['', Validators.required],
-      dt_nascimento: [''], 
-      sexo: [''],
-      especie: [''],
-      raca: ['']
-    });
+  constructor(
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController, 
+    formBuilder: FormBuilder, 
+    public camera: Camera,
+    public server: Server
+  ) 
+  {
 
-    // Watch the form for changes, and
-    this.form.valueChanges.subscribe((v) => {
-      this.isReadyToSave = this.form.valid;
-    });
+      this.form = formBuilder.group({
+        profilePic: [''],
+        nome: ['', Validators.required],
+        dt_nascimento: [''], 
+        sexo: [''],
+        especie: [],
+        raca: []
+      });
+
+      // Watch the form for changes, and
+      this.form.valueChanges.subscribe((v) => {
+        this.isReadyToSave = this.form.valid;
+      });
   }
 
   ionViewDidLoad() {
-
+    this.buscarRacas();
+    this.buscarEspecies();
   }
+
+  buscarEspecies(){
+    this.server.buscarEspecies()
+    .then((res: any) => {
+        this.especies = res.result;
+        return this.especies;
+    })
+    .catch((erro) => {
+      console.log(erro);
+    });
+  }
+
+  buscarRacas(){
+    this.server.buscarRacas()
+    .then((res: any) => {
+        this.racas = res.result;
+        return this.racas;
+    })
+    .catch((erro) => {
+      console.log(erro);
+    });
+  }
+ 
 
   getPicture() {
     if (Camera['installed']()) {
@@ -85,4 +121,16 @@ export class PetCadastrarPage {
     if (!this.form.valid) { return; }
     this.viewCtrl.dismiss(this.form.value);
   }
+
+  salvarPet(){
+    console.log(this.form);
+    // this.server.salvarPet(pet)
+    // .then((res) => {
+    //   console.log(res);
+    // })
+    // .catch((erro) => {
+    //   console.error(erro);
+    // });
+  }
+
 }

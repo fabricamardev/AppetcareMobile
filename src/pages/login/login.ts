@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, MenuController } from 'ionic-angular';
+import { NavController, ToastController, MenuController, LoadingController } from 'ionic-angular';
 
 import { MainPage } from '../../pages/pages';
 
@@ -30,6 +30,7 @@ export class LoginPage {
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
+    public loading: LoadingController,
     public menuCtrl: MenuController) {
       this.menuCtrl.enable(false);
       this.translateService.get('Não foi possível entrar na sua conta. Verifique seus dados e tente novamente.').subscribe((value) => {
@@ -40,7 +41,14 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-    this.user.login(this.account).then((resp) => {
+
+    let loader = this.loading.create({
+      content: 'Logando...',
+    });
+
+    loader.present();
+    this.user.login(this.account)
+    .then((resp) => {
       this.menuCtrl.enable(true);
       this.navCtrl.push(MainPage);
     })
@@ -52,6 +60,9 @@ export class LoginPage {
       });
       toast.present();
       console.log("Erro " + err);
+    })
+    .then(() => {
+      loader.dismiss();
     });
   }
 

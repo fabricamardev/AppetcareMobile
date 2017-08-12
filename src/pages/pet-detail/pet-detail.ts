@@ -5,17 +5,17 @@ import { Items } from '../../providers/providers';
 import { PetCadastrarPage } from '../pet-cadastrar/pet-cadastrar';
 
 @Component({
-  selector: 'page-item-detail',
-  templateUrl: 'item-detail.html'
+  selector: 'page-pet-detail',
+  templateUrl: 'pet-detail.html'
 })
-export class ItemDetailPage {
+export class PetDetailPage {
   item: any;
   items : any;
 
   constructor(public navCtrl: NavController, navParams: NavParams, items: Items
   , public modalCtrl: ModalController) {
     this.items = items;
-    this.item = navParams.get('item') || items.defaultItem;
+    // this.item = navParams.get('item') || items.defaultItem;
   }
 
   editItem() {

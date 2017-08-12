@@ -21,7 +21,7 @@ export class ListaClinicasPage {
   }
 
   buscarClinicas(){  
-    this.server.buscarAgendamentos()
+    this.server.buscarClinicas()
     .then((lista) => {
       this.petsLocations = lista;
       console.log(this.petsLocations);

@@ -9,7 +9,7 @@ import { MyApp } from './app.component';
 import { CardsPage } from '../pages/cards/cards';
 import { ContentPage } from '../pages/content/content';
 import { PetCadastrarPage } from '../pages/pet-cadastrar/pet-cadastrar';
-import { ItemDetailPage } from '../pages/item-detail/item-detail';
+import { PetDetailPage } from '../pages/pet-detail/pet-detail';
 import { PetListaPage } from '../pages/pet-lista/pet-lista';
 import { LoginPage } from '../pages/login/login';
 import { MapPage } from '../pages/map/map';
@@ -24,7 +24,11 @@ import { PerfilPage } from '../pages/perfil/perfil';
 import { TestePage } from '../pages/teste/teste';
 import { LocalizarClinicaPage } from '../pages/localizar-clinica/localizar-clinica';
 import { ListaClinicasPage } from '../pages/lista-clinicas/lista-clinicas';
-import { AgendamentoServicoListaPage } from './../pages/agendamento-servico-lista/agendamento-servico-lista';
+import { AgendamentoServicoListaPage } from '../pages/agendamento-servico-lista/agendamento-servico-lista';
+import { AgendamentoServicoNovoPage } from '../pages/agendamento-servico-novo/agendamento-servico-novo';
+import { AgendamentoServicoPage } from '../pages/agendamento-servico/agendamento-servico';
+import { LogoutPage } from '../pages/logout/logout';
+
 
 
 import { Api } from '../providers/api';
@@ -75,7 +79,7 @@ let pages = [
   CardsPage,
   ContentPage,
   PetCadastrarPage,
-  ItemDetailPage,
+  PetDetailPage,
   PetListaPage,
   LoginPage,
   MapPage,
@@ -90,7 +94,10 @@ let pages = [
   TestePage,
   LocalizarClinicaPage, 
   ListaClinicasPage,
-  AgendamentoServicoListaPage
+  AgendamentoServicoListaPage,
+  AgendamentoServicoNovoPage,
+  AgendamentoServicoPage,
+  LogoutPage
 ];
 
 export function declarations() {

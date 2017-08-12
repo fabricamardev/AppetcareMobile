@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="roxo">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -18,21 +18,22 @@
 <ion-content>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
+    <div style="text-align: center; color: #505358" *ngIf="pets.length == 0"><h2>Não existem pets cadastrados</h2></div>
+    <ion-item-sliding *ngFor="let pet of pets">
       <button ion-item (click)="openItem(item)">
         <ion-avatar item-start>
-          <img [src]="item.profilePic" />
+          <img [src]="pet.profilePic" />
         </ion-avatar>
-        <h2>{{item.nome}}</h2>
-        <p>{{item.dt_nascimento}}</p>
-        <!--<p>{{item.sexo}}</p>
-        <p>{{item.especie}}</p>
-        <p>{{item.raca}}</p>-->
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
+        <h2>{{pet.nome}}</h2>
+        <p>{{pet.dt_nascimento}}</p>
+        <!--<p>{{pet.sexo}}</p>
+        <p>{{pet.especie}}</p>
+        <p>{{pet.raca}}</p>-->
+        <ion-note item-end *ngIf="pet.note">{{pet.note}}</ion-note>
       </button>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
+        <button ion-button color="danger" (click)="deleteItem(pet)">
           Apagar
         </button>
       </ion-item-options>
@@ -40,6 +41,6 @@
   </ion-list>
 
   <ion-fab right bottom>
-    <button ion-fab class="addpet" (click)="addItem()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab class="addpet" (click)="addItem()" color="roxo"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

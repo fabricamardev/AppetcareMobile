@@ -28,22 +28,64 @@ export class Api {
       options.search = !options.search && p || options.search;
     }
 
-    return this.http.get(this.url + '/' + endpoint, options);
+    // coloca o header do autenticado na request
+    options.headers = this._userHeaders();
+
+
+    return new Promise((resolve, reject) => {
+        this.http.get(this.url + '/' + endpoint, options).map(
+          (res) => res.json()).subscribe(data => {
+            resolve(data);
+        }, 
+          (err) => {
+          reject(err);
+        });
+    });
+
+
+
   }
 
+
+
+
+
   post(endpoint: string, body: any, options?: RequestOptions) {
+    
+    if (!options) {
+      options = new RequestOptions();
+    }
+    // coloca o header do autenticado na request
+    options.headers = this._userHeaders();
+
     return new Promise((resolve, reject) => {
-        this.http.post(this.url + '/' + endpoint, body, options)
-        .map(res => res.json())
-        .subscribe(data => {
+        this.http.post(this.url + '/' + endpoint, body, options).map(
+          (res) => res.json()).subscribe(data => {
             resolve(data);
-        }, (err) => {
+        }, 
+          (err) => {
           reject(err);
         });
     });
     // return this.http.post(this.url + '/' + endpoint, body, options);
   }
 
+
+
+  //aqui pegamos o token e colocamos no formato q a api espera receber
+  _userHeaders() {
+
+    let token = 'Bearer ' + window.localStorage.getItem('token');
+
+    if (!token) { return null; }
+
+    let h = new Headers();
+    h.append('Authorization', token);
+    return h;
+  }
+
+
+  // por hora esse metodos não serão usados 
   put(endpoint: string, body: any, options?: RequestOptions) {
     return this.http.put(this.url + '/' + endpoint, body, options);
   }

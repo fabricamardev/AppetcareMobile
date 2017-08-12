@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="roxo">
     <ion-title>Cadastrar Novo Pet</ion-title>
     <ion-buttons start>
       <button ion-button (click)="cancel()">
@@ -24,7 +24,7 @@
 
 
 <ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="salvarPet()">
     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
     <div class="profile-image-wrapper" (click)="getPicture()">
       <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
@@ -47,20 +47,31 @@
           Sexo
         </ion-list-header>
         <ion-item>
-          <ion-label>Masculino</ion-label>
+          <ion-label>Macho</ion-label>
           <ion-radio value="masculino"></ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Feminino</ion-label>
+          <ion-label>Fêmea</ion-label>
           <ion-radio value="feminino"></ion-radio>
         </ion-item>
       </ion-list>
+
       <ion-item>
-        <ion-input type="text" placeholder="Espécie" formControlName="especie"></ion-input>
+        <ion-label>Espécie</ion-label>
+        <ion-select formControlName="especie" interface="popover">
+          <ion-option *ngFor="let especie of especies" [value]="especie.id" [selected]="especie.id == especieId">{{especie.nome}}</ion-option>
+        </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-input type="text" placeholder="Raça" formControlName="raca"></ion-input>
+       <ion-item>
+        <ion-label>Raça</ion-label>
+        <ion-select formControlName="raca">
+          <ion-option *ngFor="let raca of racas" [value]="raca.id">{{raca.nome}}</ion-option>
+        </ion-select>
       </ion-item>
+      <br />
+      
+      <button ion-button block >Salvar</button>
+
     </ion-list>
   </form>
 </ion-content>
