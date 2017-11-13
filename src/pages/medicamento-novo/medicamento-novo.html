@@ -1,0 +1,58 @@
+
+<ion-header>
+
+  <ion-navbar color="roxo">
+    <ion-title>Registrar novo medicamento</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Pet</ion-label>
+      <ion-select [(ngModel)]="medicamento.pet_id" interface="popover">
+          <ion-option *ngFor="let pet of pets" [value]="pet.id" [selected]="pet.id == pet_id">{{pet.nome}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Peso do pet</ion-label>
+      <ion-input type="number" [(ngModel)]="medicamento.peso" name="peso"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Data da aplicação</ion-label>
+      <ion-input type="date" [(ngModel)]="medicamento.data_uso" name="data"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Nome do medicamento</ion-label>
+      <ion-input type="text" [(ngModel)]="medicamento.nome" name="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Tipo de medicamento</ion-label>
+      <ion-input type="text" [(ngModel)]="medicamento.tipo" name="tipo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Marca do medicamento</ion-label>
+      <ion-input type="text" [(ngModel)]="medicamento.marca" name="marca"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Dose ministrada</ion-label>
+      <ion-input type="number" [(ngModel)]="medicamento.dose" name="dose"></ion-input>
+    </ion-item>
+
+
+    <br />
+    <button ion-button block="true" color="roxo" (click)="cadastrar()" >Cadastrar </button>
+    <button ion-button block="true" color="light" (click)="cancel()" >Cancelar </button>
+          
+  </ion-list>
+
+</ion-content>

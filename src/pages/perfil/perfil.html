@@ -1,6 +1,6 @@
 <ion-header>
 
-    <ion-navbar>
+    <ion-navbar color="roxo">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -11,18 +11,28 @@
 
 
 <ion-content>
-  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
-  </div>
+    <div class="teste">
+      <div class="profile-image-wrapper">
+        <img class="profile-image" alt="star" text-center #profilePic [src]="usuario.image" />
+      </div>
+    </div>
 
-  <p><button ion-item (click)="editItem(item)">Editar</button></p>
-
+  <!-- <p><button ion-item (click)="editItem(item)">Editar</button></p> -->
 
 
   <div class="item-detail" padding>
-    <h2>{{item.nome}}</h2>
-    <p>{{item.dt_nascimento}}</p>
-    <p>{{item.sexo}}</p>
-    <p>{{item.especie}}</p>
-    <p>{{item.raca}}</p>
+    <h2>{{usuario.nome}}</h2>
+    <p>
+      <label>CPF: </label>
+      <span>{{usuario.cpf}}</span>
+    </p>
+    <p>
+      <label>Email: </label>
+      <span>{{usuario.email}}</span>
+    </p>
+    <p>
+      <label>Telefone: </label>
+      <span>{{usuario.telefone}}</span>
+    </p>
   </div>
 </ion-content>

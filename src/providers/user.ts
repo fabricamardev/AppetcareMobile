@@ -4,25 +4,7 @@ import { Api } from './api';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-/**
- * Most apps have the concept of a User. This is a simple provider
- * with stubs for login/signup/etc.
- *
- * This User provider makes calls to our API at the `login` and `signup` endpoints.
- *
- * By default, it expects `login` and `signup` to return a JSON object of the shape:
- *
- * ```json
- * {
- *   status: 'success',
- *   user: {
- *     // User fields your app needs, like "id", "name", "email", etc.
- *   }
- * }
- * ```
- *
- * If the `status` field is not `success`, then an error is detected and returned.
- */
+
 @Injectable()
 export class User {
   _user: any;
@@ -30,16 +12,13 @@ export class User {
   constructor(public http: Http, public api: Api) {
   }
 
-  /**
-   * Send a POST request to our login endpoint with the data
-   * the user entered on the form.
-   */
+  
   login(accountInfo: any) {
 
     accountInfo =  {
            "grant_type": "password",
            "client_id": "1",
-           "client_secret": "jYpTMjx5MMumELR0M9BaKbEvGz4ir8AvqD2jsE7x",
+           "client_secret": "44G81LKsCpwTllD3BIxXXuOpQtcVpj4giQ0y8aFX",
            "username": accountInfo.email,
            "password": accountInfo.password,
            "scope": ""
@@ -48,16 +27,28 @@ export class User {
 
     return this.api.post('oauth/token', accountInfo)
     .then((res: any) => {
-        console.log("passou aqui");
-        console.log(res);
-        this._loggedIn(res.access_token);
+      this._loggedIn(res.access_token);
+      return this.buscarTutor(accountInfo.username);
       });
   }
 
-  /**
-   * Send a POST request to our signup endpoint with the data
-   * the user entered on the form.
-   */
+
+
+  buscarTutor(email) {
+
+    return this.api.get('api/v1/tutores?where[email]='+email)
+    .then((res: any) => {
+      console.log("Dados do tutor");
+      console.log(res.result[0]);
+      let usuario = res.result[0];
+      if(!usuario.image){
+        usuario.image = 'assets/img/avatar.png';
+      }
+      window.localStorage.setItem('usuario', JSON.stringify(usuario));
+    });
+  }
+
+
   signup(accountInfo: any) {
 
     let senha = accountInfo.password;
@@ -82,16 +73,11 @@ export class User {
   }
 
 
-  /**
-   * Log the user out, which forgets the session
-   */
   logout() {
     window.localStorage.removeItem('token');
   }
 
-  /**
-   * Process a login/signup response to store user data
-   */
+
   _loggedIn(token) {
     window.localStorage.setItem('token', token);
   }

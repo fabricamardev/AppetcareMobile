@@ -3,7 +3,7 @@
         <ion-item *ngFor="let location of petsLocations">
           <button ion-item (click)="openItem(location)">
             <ion-icon item-left name="pin"></ion-icon>
-            <h2>{{location.descricao}}</h2>
+            <h2>{{location.nome}}</h2>
             <p>{{location.tipo}}</p>
             <p>{{location.endereco}}</p>
           </button>

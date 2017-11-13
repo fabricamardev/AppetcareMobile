@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, MenuController, LoadingController } from 'ionic-angular';
 
-import { MainPage } from '../../pages/pages';
+// import { MainPage } from '../../pages/pages';
 
 import { User } from '../../providers/user';
 
 import { TranslateService } from '@ngx-translate/core';
 
 import { SignupPage } from '../signup/signup';
+import { PetListaPage } from "../pet-lista/pet-lista";
+
 
 
 @Component({
@@ -50,7 +52,8 @@ export class LoginPage {
     this.user.login(this.account)
     .then((resp) => {
       this.menuCtrl.enable(true);
-      this.navCtrl.push(MainPage);
+      this.navCtrl.setRoot(PetListaPage);
+      
     })
     .catch ((err) => {
       let toast = this.toastCtrl.create({

@@ -1,53 +1,71 @@
-
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController } from 'ionic-angular';
 
 import { PetCadastrarPage } from '../pet-cadastrar/pet-cadastrar';
 import { PetDetailPage } from '../pet-detail/pet-detail';
 
 import { Server } from '../../providers/server';
 
-import { Item } from '../../models/item';
 import { Network } from '@ionic-native/network';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-pet-lista',
   templateUrl: 'pet-lista.html'
 })
 export class PetListaPage {
+
+  usuario: any = JSON.parse(window.localStorage.getItem('usuario'));
+
   pets: any = [];
-  pet: {
-    'nome' : undefined,
-    'dt_nascimento' : undefined,
-    'sexo' : undefined,
-    'especie' : undefined,
-    'raca' : undefined 
-  };
+
+  raca : any = {
+            "id": undefined,
+            "especie_id": undefined,
+            "nome": undefined,
+            "especie": {
+                "id": undefined,
+                "nome": undefined
+          }
+}
+
+ 
 
   constructor(
     public navCtrl: NavController, 
     public server: Server, 
     public modalCtrl: ModalController, 
+    public loading: LoadingController,
     private network: Network) {
-
+      
   }
 
   /**
    * The view loaded, let's query our items for the list
    */
-  ionViewDidLoad() {
-
+  ionViewWillEnter() {
+    this.buscarPets(this.usuario.id);    
   }
 
-  buscarPets() {
-    this.server.buscarPets()
+  buscarPets(tutor_id) {
+
+    let loader = this.loading.create({
+      content: 'Carregando...',
+    });
+
+    loader.present();
+    this.server.buscarPets(tutor_id)
     .then((lista) => {
-      this.pets = lista;
+      console.log(lista.result);
+      this.pets = lista.result;
       console.log(this.pets);
     })
     .catch((erro : any) => {
       console.error(erro);
     })
+    .then(() => {
+      loader.dismiss();
+    });
   }
 
 
@@ -56,29 +74,47 @@ export class PetListaPage {
    * modal and then adds the new item to our data source if the user created one.
    */
   addItem() {
-    let addModal = this.modalCtrl.create(PetCadastrarPage);
-    addModal.onDidDismiss(pet => {
-      if (pet) {
-        this.pets.add(pet);
-      }
-    })
-    addModal.present();
+    // let addModal = this.modalCtrl.create(PetCadastrarPage);
+    // addModal.onDidDismiss(pet => {
+    //   if (pet) {
+    //     this.pets.add(pet);
+    //   }
+    // })
+    // addModal.present();
+    this.navCtrl.push(PetCadastrarPage);
+    
   }
 
+  editarPet(pet){
 
-  /**
-   * Delete an item from the list of items.
-   */
-  deleteItem(pet) {
-    this.pets.delete(pet);
+    let myDate = moment(pet.data_nascimento).format("YYYY-MM-DD");
+    pet.data_nascimento = myDate;
+    this.navCtrl.push(PetCadastrarPage, {
+      pet: pet
+    });
+  }
+
+  deletarPet(pet) {
+    this.server.deletarPet(pet.id)
+    .then((res: any) => {
+      console.log("Objeto deletado");
+      console.log(res);
+      this.buscarPets(this.usuario.id);
+      return res;
+    })
+    .catch((erro) => {
+      console.log(erro);
+    });
   }
 
   /**
    * Navigate to the detail page for this item.
    */
+  
+   
   openPet(pet) {
     this.navCtrl.push(PetDetailPage, {
-      pet: pet
+      id: pet.id
     });
   }
 }

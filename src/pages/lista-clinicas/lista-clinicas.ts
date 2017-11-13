@@ -1,9 +1,8 @@
-import { TestePage } from './../teste/teste';
+import { AgendamentoServicoNovoPage } from './../agendamento-servico-novo/agendamento-servico-novo';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Server } from './../../providers/server';
 
-@IonicPage()
 @Component({
   selector: 'page-lista-clinicas',
   templateUrl: 'lista-clinicas.html',
@@ -16,7 +15,7 @@ export class ListaClinicasPage {
   
   }
 
-  ngAfterViewInit() {
+  ionViewWillEnter() {
     this.buscarClinicas();
   }
 
@@ -33,9 +32,9 @@ export class ListaClinicasPage {
   /**
    * Navegar para detalhes do estabelecimento
    */
-  openItem(item) {
-    this.navCtrl.push(TestePage, {
-      item: item
+  openItem(estabelecimento_id) {
+    this.navCtrl.push(AgendamentoServicoNovoPage, {
+      estabelecimento_id: estabelecimento_id
     });
   }
 

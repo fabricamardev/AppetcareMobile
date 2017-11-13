@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Api {
   url: string = 'http://104.155.173.20/appetcare';
+  // url: string = 'http://10.10.50.58/appetcare';
 
   constructor(public http: Http) {
   }
@@ -47,9 +48,6 @@ export class Api {
   }
 
 
-
-
-
   post(endpoint: string, body: any, options?: RequestOptions) {
     
     if (!options) {
@@ -70,6 +68,48 @@ export class Api {
     // return this.http.post(this.url + '/' + endpoint, body, options);
   }
 
+  put(endpoint: string, body: any, options?: RequestOptions) {
+    if (!options) {
+      options = new RequestOptions();
+    }
+    // coloca o header do autenticado na request
+    options.headers = this._userHeaders();
+
+    return new Promise((resolve, reject) => {
+        this.http.put(this.url + '/' + endpoint, body, options).map(
+          (res) => res.json()).subscribe(data => {
+            resolve(data);
+        }, 
+          (err) => {
+          reject(err);
+        });
+    });
+    // return this.http.put(this.url + '/' + endpoint, body, options);
+  }
+
+  delete(endpoint: string, options?: RequestOptions) {
+
+    if (!options) {
+      options = new RequestOptions();
+    }
+    // coloca o header do autenticado na request
+    options.headers = this._userHeaders();
+
+    return new Promise((resolve, reject) => {
+      this.http.delete(this.url + '/' + endpoint, options).map(
+        (res) => res.json()).subscribe(data => {
+          resolve(data);
+      }, 
+        (err) => {
+        reject(err);
+      });
+    });
+    
+    // return this.http.delete(this.url + '/' + endpoint, options);
+  }
+
+
+
 
 
   //aqui pegamos o token e colocamos no formato q a api espera receber
@@ -86,13 +126,9 @@ export class Api {
 
 
   // por hora esse metodos não serão usados 
-  put(endpoint: string, body: any, options?: RequestOptions) {
-    return this.http.put(this.url + '/' + endpoint, body, options);
-  }
+  
 
-  delete(endpoint: string, options?: RequestOptions) {
-    return this.http.delete(this.url + '/' + endpoint, options);
-  }
+  
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
     return this.http.put(this.url + '/' + endpoint, body, options);

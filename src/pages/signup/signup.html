@@ -7,32 +7,32 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
   <form (submit)="doSignup()">
     <ion-list>
 
       <ion-item>
-        <ion-label fixed>Nome</ion-label>
+        <ion-label floating>Nome</ion-label>
         <ion-input type="text" [(ngModel)]="account.nome" name="nome"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Email</ion-label>
+        <ion-label floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Telefone</ion-label>
-        <ion-input type="tel" [(ngModel)]="account.telefone" name="telefone"></ion-input>
+        <ion-label floating>Telefone</ion-label>
+        <ion-input type="tel" [(ngModel)]="account.telefone" [mask]="'telephone'" name="telefone"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Cpf</ion-label>
-        <ion-input type="text" [(ngModel)]="account.cpf" name="cpf"></ion-input>
+        <ion-label floating>Cpf</ion-label>
+        <ion-input type="text" [(ngModel)]="account.cpf" [mask]="'000.000.000-00'" name="cpf" maxlength="14"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Senha</ion-label>
+        <ion-label floating>Senha</ion-label>
         <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
       </ion-item>
 
@@ -42,4 +42,5 @@
 
     </ion-list>
   </form>
+  <button ion-button block="true" color="light" (click)="cancelar()" >Cancelar </button>
 </ion-content>

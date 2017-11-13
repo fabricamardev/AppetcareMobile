@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-
-import { MainPage } from '../../pages/pages';
+import { NavController, ToastController, LoadingController, MenuController } from 'ionic-angular';
 import { User } from '../../providers/user';
-
 import { TranslateService } from '@ngx-translate/core';
+import { PetListaPage } from "../pet-lista/pet-lista";
+
 
 
 @Component({
@@ -12,9 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
+
   account: { name: string, email: string, fone: string, cpf: string, password: string } = {
     name: undefined,
     email: undefined,
@@ -29,18 +26,26 @@ export class SignupPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+    public loading: LoadingController,
+    public translateService: TranslateService,
+    public menuCtrl: MenuController) {
+      this.menuCtrl.enable(false);
 
-    this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
+    this.translateService.get('Não foi possível realizar o cadastro, verifique sua conexão').subscribe((value) => {
       this.signupErrorString = value;
     })
   }
 
   doSignup() {
-    // Attempt to login in through our User service
+    let loader = this.loading.create({
+      content: 'Cadastrando...',
+    });
+
+    loader.present();
     this.user.signup(this.account)
     .then((resp) => {
-      this.navCtrl.push(MainPage);
+      this.menuCtrl.enable(true);
+      this.navCtrl.setRoot(PetListaPage);
     })
     .catch ((err) => {
       // Unable to sign up
@@ -51,6 +56,13 @@ export class SignupPage {
       });
       toast.present();
       console.log("Erro " + err);
+    })
+    .then(() => {
+      loader.dismiss();
     });
+  }
+
+  cancelar() : void{
+    this.navCtrl.pop();
   }
 }

@@ -1,0 +1,38 @@
+<ion-header>
+  
+    <ion-navbar color="roxo">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Lista de medicamentos</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <ion-list>
+      <ion-item-sliding *ngFor="let medicamento of listamedicamentos">
+        <button ion-item (click)="openMedicamento(medicamento)">
+          <h2>{{medicamento.nome}}</h2>
+          <p><label>Data de aplicação: </label><span>{{medicamento.data_uso}}</span></p>
+          <p><label>Nome do pet: </label><span>{{medicamento.pet_nome}}</span></p>
+        </button>
+  
+        <ion-item-options>
+          <button ion-button color="sucess" (click)="editarMedicamento(medicamento)">
+            Editar
+          </button>
+          <button ion-button color="danger" (click)="deleteMedicamento(medicamento)">
+            Apagar
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  
+    <ion-fab right bottom>
+      <button ion-fab class="addpet" (click)="addMedicamento()" color="roxo"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </ion-content>
+  
+  

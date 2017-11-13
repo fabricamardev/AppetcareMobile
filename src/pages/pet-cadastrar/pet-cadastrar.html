@@ -2,75 +2,71 @@
 
   <ion-navbar color="roxo">
     <ion-title>Cadastrar Novo Pet</ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="cancel()">
-        <span color="primary" showWhen="ios">
-          Cancelar
-        </span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-buttons end>
-      <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
-        <span color="primary" showWhen="ios">
-          Salvar
-        </span>
-        <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
-      </button>
-    </ion-buttons>
+    
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
-  <form *ngIf="form" [formGroup]="form" (ngSubmit)="salvarPet()">
-    <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
-    <div class="profile-image-wrapper" (click)="getPicture()">
-      <div class="profile-image-placeholder" *ngIf="!this.form.controls.profilePic.value">
+<ion-content padding>
+  <form>
+     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)" />
+    <div class="profile-image-wrapper" (click)="onActionSheet()">
+      <div class="profile-image-placeholder" *ngIf="!pet.image">
         <ion-icon name="add"></ion-icon>
         <div>
           Adicionar foto
         </div>
       </div>
-      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="this.form.controls.profilePic.value"></div>
-    </div>
+      <div class="profile-image" [style.backgroundImage]="getProfileImageStyle()" *ngIf="pet.image"></div>
+    </div> 
+    
     <ion-list>
       <ion-item>
-        <ion-input type="text" placeholder="Nome" formControlName="nome"></ion-input>
+        <ion-label floating>Nome</ion-label>
+        <ion-input type="text" [(ngModel)]="pet.nome" name="nome"></ion-input>
       </ion-item>
+      
       <ion-item>
-        <ion-input type="date" placeholder="Data de nascimento" formControlName="dt_nascimento"></ion-input>
+        <ion-label floating>Data de nascimento</ion-label>
+        <ion-input type="date" [(ngModel)]="pet.data_nascimento" name="data"></ion-input>
       </ion-item>
-      <ion-list radio-group formControlName="sexo">
+
+      <ion-item>
+        <ion-label floating>Peso do pet</ion-label>
+        <ion-input type="number" [(ngModel)]="pet.peso" name="peso"></ion-input>
+      </ion-item>
+
+      <ion-list radio-group [(ngModel)]="pet.sexo" name="sexo">
         <ion-list-header>
           Sexo
         </ion-list-header>
         <ion-item>
           <ion-label>Macho</ion-label>
-          <ion-radio value="masculino"></ion-radio>
+          <ion-radio value="M"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Fêmea</ion-label>
-          <ion-radio value="feminino"></ion-radio>
+          <ion-radio value="F"></ion-radio>
         </ion-item>
       </ion-list>
 
       <ion-item>
-        <ion-label>Espécie</ion-label>
-        <ion-select formControlName="especie" interface="popover">
+        <ion-label floating>Espécie</ion-label>
+        <ion-select name="especie">
           <ion-option *ngFor="let especie of especies" [value]="especie.id" [selected]="especie.id == especieId">{{especie.nome}}</ion-option>
         </ion-select>
       </ion-item>
        <ion-item>
-        <ion-label>Raça</ion-label>
-        <ion-select formControlName="raca">
+        <ion-label floating>Raça</ion-label>
+        <ion-select [(ngModel)]="pet.raca_id" name="raca">
           <ion-option *ngFor="let raca of racas" [value]="raca.id">{{raca.nome}}</ion-option>
         </ion-select>
       </ion-item>
       <br />
       
-      <button ion-button block >Salvar</button>
+      <button ion-button block="true" color="roxo" (click)="salvarPet()">Salvar</button>
+      <button ion-button block="true" color="light" (click)="cancelar()" >Cancelar </button>
 
     </ion-list>
   </form>

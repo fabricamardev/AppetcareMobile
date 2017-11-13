@@ -1,9 +1,9 @@
+import { PetListaPage } from './../pet-lista/pet-lista';
 import { Component, ViewChild } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, ViewController } from 'ionic-angular';
-
-import { Camera } from '@ionic-native/camera';
+import { ActionSheetController, NavController, ViewController, ToastController, NavParams, Platform, LoadingController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Server } from '../../providers/server';
+import * as moment from 'moment';
 
 
 @Component({
@@ -15,40 +15,49 @@ export class PetCadastrarPage {
 
   isReadyToSave: boolean;
 
+  usuario: any = JSON.parse(window.localStorage.getItem('usuario'));
+
   especies: any = [];
   racas: any = [];
 
   especieId: any;
 
-  form: FormGroup;
+  pet: { id: number, tutor_id: number, image: string, nome: string, sexo: string, data_nascimento: string, raca_id: number, peso: number } = {
+    id: undefined,
+    tutor_id: undefined,
+    image: undefined,
+    nome: undefined,
+    sexo: undefined,
+    data_nascimento: undefined,
+    raca_id: undefined, 
+    peso: undefined
+  };
+
 
   constructor(
+    public actionSheetCtrl : ActionSheetController,
     public navCtrl: NavController, 
-    public viewCtrl: ViewController, 
-    formBuilder: FormBuilder, 
+    public navParams: NavParams,
+    public toastCtrl: ToastController,
+    public viewCtrl: ViewController,  
     public camera: Camera,
+    public loading: LoadingController,
     public server: Server
   ) 
   {
-
-      this.form = formBuilder.group({
-        profilePic: [''],
-        nome: ['', Validators.required],
-        dt_nascimento: [''], 
-        sexo: [''],
-        especie: [],
-        raca: []
-      });
-
-      // Watch the form for changes, and
-      this.form.valueChanges.subscribe((v) => {
-        this.isReadyToSave = this.form.valid;
-      });
+    let editPet = this.navParams.get('pet');
+    if(editPet){
+      this.pet = editPet;
+      console.log("Pet detalhes");
+      console.log(this.pet);
+      // this.buscarPetPorId(this.pet.id);
+    }
   }
 
   ionViewDidLoad() {
     this.buscarRacas();
     this.buscarEspecies();
+    console.log(this.usuario);
   }
 
   buscarEspecies(){
@@ -72,65 +81,130 @@ export class PetCadastrarPage {
       console.log(erro);
     });
   }
- 
 
-  getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 96,
-        targetHeight: 96
-      }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        // alert('Unable to take photo');
-        console.log('Unable to take photo' + err);
-      })
-    } else {
-      this.fileInput.nativeElement.click();
-    }
+  //esse menu é para aparecer as opções para captura a foto
+  onActionSheet(): void {
+    this.actionSheetCtrl.create({
+      title: 'selecione a imagem',
+      buttons: [
+        {
+          text: 'Selecione do arquivo',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        {
+          text: 'Usar a câmera',
+          handler: () => {
+            this.takePicture(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: 'Cancelar'
+        }
+      ],
+    }).present();
+
   }
+
+
+  takePicture(sourceType: number): void{
+    let cameraOptions: CameraOptions = {
+      correctOrientation: true,
+      quality: 100,
+      saveToPhotoAlbum: false,
+      sourceType: sourceType,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 600,
+      targetHeight: 600
+      
+    };
+
+    this.camera.getPicture(cameraOptions)
+      .then((imageData) => {
+        console.log('Foto: ', imageData);
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
+        this.pet.image = base64Image;
+
+        console.log('Foto: ', this.pet.image);
+      })
+      .catch((err: Error) => console.log('Camera error: ', err));
+
+  }
+
 
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
 
       let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
+      this.pet.image = imageData;
+      // this.form.patchValue({ 'profilePic': imageData });
     };
 
     reader.readAsDataURL(event.target.files[0]);
   }
 
   getProfileImageStyle() {
-    return 'url(' + this.form.controls['profilePic'].value + ')'
+    return 'url(' + this.pet.image + ')'
   }
 
-  /**
-   * The user cancelled, so we dismiss without sending data back.
-   */
-  cancel() {
+  cancelar() {
     this.viewCtrl.dismiss();
   }
 
-  /**
-   * The user is done and wants to create the item, so return it
-   * back to the presenter.
-   */
-  done() {
-    if (!this.form.valid) { return; }
-    this.viewCtrl.dismiss(this.form.value);
-  }
 
-  salvarPet(){
-    console.log(this.form);
-    // this.server.salvarPet(pet)
-    // .then((res) => {
-    //   console.log(res);
-    // })
-    // .catch((erro) => {
-    //   console.error(erro);
-    // });
+  showToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present(toast);
+  }
+ 
+
+  async salvarPet(){
+
+    //criticas
+    if(!this.pet.nome){
+      this.showToast('Preencha o nome do pet para continuar');
+      return;
+    }
+
+    if(!this.pet.data_nascimento){
+      this.showToast('Preencha a data de nascimento do pet para continuar');
+      return;
+    }
+
+    //aqui pegamos o usuário já logado para ser cadastrado como tutor
+    this.pet.tutor_id = this.usuario.id;
+
+    //aqui convertemos a data pq a api não trata o formato de data, caso esteja errado eh retornado o erro 500
+    let myDate = moment(this.pet.data_nascimento).format("DD/MM/YYYY");
+    this.pet.data_nascimento = myDate;
+
+
+    let loader = this.loading.create({
+      content: 'Salvando...',
+    });
+
+    loader.present();
+    this.server.salvarPet(this.pet)
+    .then((res) => {
+      console.log("resposta da request de salvarpet");
+      console.log(res);
+      this.navCtrl.pop();
+    })
+    .catch((erro) => {
+      console.log("erro na request de salvar pet");
+      console.error(erro);
+    })
+    .then(() => {
+      loader.dismiss();
+    });
   }
 
 }

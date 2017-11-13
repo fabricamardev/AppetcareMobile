@@ -8,56 +8,62 @@
 
 
 <ion-content padding>
+    <ion-list>
 
-  <ion-list>
-    <ion-item>
-      <ion-label>Estabelecimento</ion-label>
-      <ion-select [(ngModel)]="estabeleciamento" interface="popover">
-        <ion-option *ngFor="let est of listaEstabelecimentos" [value]="est.id" [selected]="est.id == estabelecimentoId">{{est.nome}}</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Data do serviço</ion-label>
+        <ion-input type="date" [(ngModel)]="servico.data" name="data" (change)='carregarData($event.target.value)'></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Serviço</ion-label>
-      <ion-select [(ngModel)]="servico" interface="popover">
-        <ion-option value="7">Banho</ion-option>
-        <ion-option value="8">Tosa</ion-option>
-        <ion-option value="9">Consulta</ion-option>
-        <ion-option value="10">Aplicação de vacina</ion-option>
-        <ion-option value="11">Exames</ion-option>
-        <ion-option value="12">Acupuntura</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Estabelecimento</ion-label>
+        <ion-select [(ngModel)]="servico.estabelecimento_id" (ionChange)="carregar($event)" interface="popover">
+          <ion-option *ngFor="let est of listaEstabelecimentos" [value]="est.id" [selected]="est.id == estabelecimento_id">{{est.nome}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Pet</ion-label>
-      <ion-select [(ngModel)]="pet" interface="popover">
-        <ion-option value="13">Chico</ion-option>
-        <ion-option value="14">Xurupita</ion-option>
-        <ion-option value="15">Tudo Junto</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Serviço</ion-label>
+        <ion-select [(ngModel)]="servico.servico_id" interface="popover">
+          <ion-option *ngFor="let ser of listaServicos" [value]="ser.id" [selected]="ser.id == estabelecimento_id">{{ser.nome}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Horário</ion-label>
-      <ion-select [(ngModel)]="horario" interface="popover">
-        <ion-option value="16">08:00 - 09:00</ion-option>
-        <ion-option value="17">09:00 - 10:00</ion-option>
-        <ion-option value="18">10:00 - 11:00</ion-option>
-        <ion-option value="19">11:00 - 12:00</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Pet</ion-label>
+        <ion-select [(ngModel)]="servico.pet_id" interface="popover">
+            <ion-option *ngFor="let pet of pets" [value]="pet.id" [selected]="pet.id == pet_id">{{pet.nome}}</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Observação</ion-label>
-      <ion-textarea></ion-textarea>
-    </ion-item>
 
-    <br />
+      <ion-item>
+        <ion-label floating> Turno</ion-label>
+        <ion-select [(ngModel)]="servico.turno" interface="popover">
+            <ion-option value="manhã">manhã</ion-option>
+            <ion-option value="Tarde">Tarde</ion-option>
+            <ion-option value="Noite">Noite</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <button ion-button block="true" color="roxo" ><span color="bege"> Agendar </span></button>
-   
-  </ion-list>
+      <ion-item>
+        <ion-label floating>Horário</ion-label>
+        <ion-select [(ngModel)]="servico.horario" interface="popover">
+          <ion-option *ngFor="let hora of listaHorarios" [value]="hora" [selected]="hora == estabelecimento_id">{{hora}}</ion-option>
+        </ion-select>
+      </ion-item>
 
+      <!-- <ion-item>
+        <ion-label>Observação</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item> -->
+
+      <br />
+
+      <button ion-button block="true" color="roxo" (click)="agendar()" >Agendar </button>
+      <button ion-button block="true" color="light" (click)="cancel()" >Cancelar </button>
+    
+    </ion-list>
+  
 
 </ion-content>

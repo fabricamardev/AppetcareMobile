@@ -9,17 +9,22 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <ion-list>
     <ion-item-sliding *ngFor="let agendamento of agendamentos">
       <button ion-item (click)="openAgendamento(agendamento)">
+        <!-- <ion-icon item-left name="calendar"></ion-icon> -->
         <h2>{{agendamento.servico}}</h2>
+        <p>{{agendamento.estabelecimento}}</p>
         <p>{{agendamento.pet}}</p>
         <p>{{agendamento.data}} - {{agendamento.horario}}</p>
       </button>
 
       <ion-item-options>
+        <!-- <button ion-button color="sucess" (click)="editarAgendamento(agendamento)">
+          Editar
+        </button> -->
         <button ion-button color="danger" (click)="deleteAgendamento(agendamento)">
           Apagar
         </button>

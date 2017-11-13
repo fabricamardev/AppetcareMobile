@@ -1,25 +1,30 @@
 <ion-header>
 
   <ion-navbar color="roxo">
-    <ion-title>{{ item.nome }}</ion-title>
+    <ion-title>{{ pet.nome }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'">
-  </div>
+
+    <!-- <div class="area-imagem">
+      <div class="imagem"></div>
+    </div> -->
+    <img style="object-fit: cover;" width= "100%" height= "250" alt="imagem" text-center #profilePic [src]="pet.image" />
+  
 
   <!--<p><button ion-item (click)="editItem(item)">Editar</button></p>-->
 
 
 
   <div class="item-detail" padding>
-    <h2>{{item.nome}}</h2>
-    <p>{{item.dt_nascimento}}</p>
-    <p>{{item.sexo}}</p>
-    <p>{{item.especie}}</p>
-    <p>{{item.raca}}</p>
+    <h2>{{pet.nome}}</h2>
+    <p><label>Data de nascimento: </label><span>{{pet.data_nascimento}}</span></p>
+    <p><label>Peso: </label><span>{{pet.peso}} kg</span></p>
+    <p><label>Sexo: </label><span>{{pet.sexo}}</span></p>
+    <p><label>Espécie: </label><span>{{raca.especie.nome}}</span></p>
+    <p><label>Raça: </label><span>{{raca.nome}}</span></p>
   </div>
 </ion-content>

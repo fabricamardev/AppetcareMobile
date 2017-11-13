@@ -1,7 +1,7 @@
 <ion-content class="content" scroll="false">
   <div class="splash-all">
     <div class="splash-logo">
-      <img src="../assets/img/appetcare-logo.png" style="width: 100%"/>
+       <img src="assets/img/appetcare-logo.png" style="width: 100%"/> 
     </div>
     <p style="font-size: 3em; margin-top: 0; margin-bottom:0.5em;">Appetcare</p>
   
@@ -9,19 +9,19 @@
       <ion-list>
 
         <ion-item>
-          <ion-label fixed style="color:#f8d9a8">Email</ion-label>
+          <ion-label floating style="color:#f8d9a8">Email</ion-label>
           <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label fixed style="color:#f8d9a8">Senha</ion-label>
+          <ion-label floating style="color:#f8d9a8">Senha</ion-label>
           <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
         </ion-item>
 
         <div style="padding: 16px 16px 0;">
           <button class="login" ion-button block>Entrar</button>
-          <button class="loginBtn loginBtn--facebook" ion-button block>Entrar com Facebook</button>
-          <button class="loginBtn loginBtn--google" ion-button block>Entrar com Google</button>
+          <!-- <button class="loginBtn loginBtn--facebook" ion-button block>Entrar com Facebook</button>
+          <button class="loginBtn loginBtn--google" ion-button block>Entrar com Google</button> -->
         </div>
 
       </ion-list>

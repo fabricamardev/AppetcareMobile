@@ -15,25 +15,27 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <ion-list>
     <div style="text-align: center; color: #505358" *ngIf="pets.length == 0"><h2>Não existem pets cadastrados</h2></div>
     <ion-item-sliding *ngFor="let pet of pets">
-      <button ion-item (click)="openItem(item)">
+      <button ion-item (click)="openPet(pet)">
         <ion-avatar item-start>
-          <img [src]="pet.profilePic" />
+          <img style="object-fit: cover;" [src]="pet.image" />
         </ion-avatar>
         <h2>{{pet.nome}}</h2>
-        <p>{{pet.dt_nascimento}}</p>
+        <p>{{pet.data_nascimento}}</p>
         <!--<p>{{pet.sexo}}</p>
         <p>{{pet.especie}}</p>
         <p>{{pet.raca}}</p>-->
-        <ion-note item-end *ngIf="pet.note">{{pet.note}}</ion-note>
       </button>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(pet)">
+        <button ion-button color="sucess" (click)="editarPet(pet)">
+          Editar
+        </button>
+        <button ion-button color="danger" (click)="deletarPet(pet)">
           Apagar
         </button>
       </ion-item-options>
